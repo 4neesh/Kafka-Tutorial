@@ -13,6 +13,4 @@ public class KafkaTopicConfig {
     public NewTopic demoTopic(){
         return TopicBuilder.name("MyTopic").build();
     }
-
-
 }
