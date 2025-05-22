@@ -40,8 +40,8 @@ Run the Spring Boot application using:
 ```
 
 ## API Endpoints
-- POST https://localhost:8080/publish?message=hello — Sends a plain text message to Kafka
-- POST https://localhost:8080/publishJson — Sends a JSON payload (User object) to Kafka
+- POST http://localhost:8080/publish?message=hello — Sends a plain text message to Kafka
+- POST http://localhost:8080/publishJson — Sends a JSON payload (User object) to Kafka
 
 ## Notes
 Make sure Kafka is running and accessible at localhost:9092. You can configure topic names and bootstrap servers in src/main/resources/application.properties.
