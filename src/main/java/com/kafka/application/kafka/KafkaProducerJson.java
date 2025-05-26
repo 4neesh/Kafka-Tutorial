@@ -20,7 +20,6 @@ public class KafkaProducerJson {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @Transactional
     public void sendMessage(User user){
         LOGGER.info(String.format("Json message sent: %s", user));
 
@@ -32,7 +31,7 @@ public class KafkaProducerJson {
         // Execute within a transaction
         kafkaTemplate.executeInTransaction(operations -> {
             operations.send(message);
-            return null;
+            return true;
         });
         
         LOGGER.info("Transaction completed successfully");
