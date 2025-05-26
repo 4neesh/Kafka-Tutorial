@@ -8,20 +8,19 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class KafkaProducerJson {
 
     private final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerJson.class);
-    private KafkaTemplate<String, User> kafkaTemplate;
+    private final KafkaTemplate<String, User> kafkaTemplate;
 
     public KafkaProducerJson(KafkaTemplate<String, User> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void sendMessage(User user){
-        LOGGER.info(String.format("Json message sent: %s", user));
+        LOGGER.info("Json message sent: {}", user);
 
         Message<User> message = MessageBuilder
                 .withPayload(user)
