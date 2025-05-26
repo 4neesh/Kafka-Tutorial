@@ -13,19 +13,26 @@ import org.springframework.stereotype.Service;
 public class KafkaProducerJson {
 
     private final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerJson.class);
-    private KafkaTemplate<String, User> kafkaTemplate;
+    private final KafkaTemplate<String, User> kafkaTemplate;
 
     public KafkaProducerJson(KafkaTemplate<String, User> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     public void sendMessage(User user){
-        LOGGER.info(String.format("Json message sent: %s", user));
+        LOGGER.info("Json message sent: {}", user);
 
         Message<User> message = MessageBuilder
                 .withPayload(user)
                 .setHeader(KafkaHeaders.TOPIC, "MyJsonTopic")
                 .build();
-        kafkaTemplate.send(message);
+        
+        // Execute within a transaction
+        kafkaTemplate.executeInTransaction(operations -> {
+            operations.send(message);
+            return true;
+        });
+        
+        LOGGER.info("Transaction completed successfully");
     }
 }
