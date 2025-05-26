@@ -1,6 +1,6 @@
-# Kafka Spring Boot Application
+# Kafka Spring Boot Application with EOS Support
 
-This is a basic Spring Boot application that demonstrates producing and consuming messages with Apache Kafka. It includes REST endpoints to send plain text and JSON messages, and a consumer that logs the received data.
+This is a Spring Boot application that demonstrates producing and consuming messages with Apache Kafka, featuring Exactly Once Semantics (EOS) support. It includes REST endpoints to send plain text and JSON messages, and a consumer that logs the received data, ensuring that messages are processed exactly once.
 
 ## Prerequisites
 
@@ -57,3 +57,20 @@ When calling the /publishJson endpoint, the body must include a JSON representat
 
 ## Notes
 Make sure Kafka is running and accessible at localhost:9092. You can configure topic names and bootstrap servers in src/main/resources/application.properties.
+
+## Exactly Once Semantics (EOS) Support
+
+This application has been configured to support Exactly Once Semantics (EOS) for Kafka message processing:
+
+### Producer Configuration
+- Transaction support is enabled with a transaction ID prefix
+- Idempotence is enabled to prevent duplicate message production
+- All acknowledgments (acks=all) are required to ensure messages are properly committed
+
+### Consumer Configuration
+- Isolation level is set to `read_committed` to ensure consumers only read committed messages
+- This prevents the consumption of messages that are part of aborted transactions
+
+### Implementation Details
+- Producers use the `@Transactional` annotation and `executeInTransaction` method to ensure messages are sent within transactions
+- This guarantees that either all messages in a transaction are successfully delivered or none are

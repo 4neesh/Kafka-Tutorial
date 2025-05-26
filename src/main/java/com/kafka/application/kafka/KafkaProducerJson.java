@@ -8,6 +8,7 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class KafkaProducerJson {
@@ -19,6 +20,7 @@ public class KafkaProducerJson {
         this.kafkaTemplate = kafkaTemplate;
     }
 
+    @Transactional
     public void sendMessage(User user){
         LOGGER.info(String.format("Json message sent: %s", user));
 
@@ -26,6 +28,13 @@ public class KafkaProducerJson {
                 .withPayload(user)
                 .setHeader(KafkaHeaders.TOPIC, "MyJsonTopic")
                 .build();
-        kafkaTemplate.send(message);
+        
+        // Execute within a transaction
+        kafkaTemplate.executeInTransaction(operations -> {
+            operations.send(message);
+            return null;
+        });
+        
+        LOGGER.info("Transaction completed successfully");
     }
 }
