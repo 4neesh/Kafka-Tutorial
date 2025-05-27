@@ -25,7 +25,6 @@ bin/kafka-server-start.sh config/server.properties
 
 3.**View Topic messages (each in a new terminal):**
 ```bash
-bin/kafka-console-consumer.sh --topic MyTopic --from-beginning --bootstrap-server localhost:9092
 bin/kafka-console-consumer.sh --topic MyJsonTopic --from-beginning --bootstrap-server localhost:9092
 ```
 
@@ -41,7 +40,6 @@ Run the Spring Boot application using:
 ```
 
 ## API Endpoints
-- POST http://localhost:8080/publish?message=hello — Sends a plain text message to Kafka
 - POST http://localhost:8080/publishJson — Sends a JSON payload (User object) to Kafka
 
 ### JSON Payload Example for /publishJson
