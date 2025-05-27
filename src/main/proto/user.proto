@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.kafka.application.proto;
+
+option java_package = "com.kafka.application.proto";
+option java_outer_classname = "UserProto";
+option java_multiple_files = true;
+
+message User {
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+}
