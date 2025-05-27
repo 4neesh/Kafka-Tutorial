@@ -1,6 +1,5 @@
 package com.kafka.application.controller;
 
-import com.kafka.application.kafka.KafkaProducer;
 import com.kafka.application.kafka.KafkaProducerJson;
 import com.kafka.application.payload.User;
 import org.slf4j.Logger;
