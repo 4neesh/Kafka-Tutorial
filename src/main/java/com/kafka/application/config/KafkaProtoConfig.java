@@ -11,6 +11,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 
@@ -64,5 +65,10 @@ public class KafkaProtoConfig {
         ConcurrentKafkaListenerContainerFactory<String, UserProto.User> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactoryProto());
         return factory;
+    }
+
+    @Bean
+    ProtobufHttpMessageConverter protobufHttpMessageConverter() {
+        return new ProtobufHttpMessageConverter();
     }
 }
