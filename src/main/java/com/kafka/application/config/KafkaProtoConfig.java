@@ -39,6 +39,7 @@ public class KafkaProtoConfig {
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaProtobufSerializer.class);
         config.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "proto-" + transactionIdPrefix);
+        config.put("schema.registry.url", "http://localhost:8081");
 
         return new DefaultKafkaProducerFactory<>(config);
     }
@@ -56,6 +57,8 @@ public class KafkaProtoConfig {
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaProtobufDeserializer.class);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroupId);
         config.put(KafkaProtobufDeserializerConfig.SPECIFIC_PROTOBUF_VALUE_TYPE, UserProto.User.class.getName());
+        config.put("schema.registry.url", "http://localhost:8081");
+
         return new DefaultKafkaConsumerFactory<>(config);
     }
 

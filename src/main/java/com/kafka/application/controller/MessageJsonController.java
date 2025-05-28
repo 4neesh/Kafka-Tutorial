@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/kafka")
+@RequestMapping("/api/v1/kafka/json")
 public class MessageJsonController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(MessageJsonController.class);
