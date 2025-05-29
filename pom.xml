@@ -65,6 +65,16 @@
 			<artifactId>kafka-protobuf-serializer</artifactId>
 			<version>7.9.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
