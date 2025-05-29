@@ -67,9 +67,7 @@ public class KafkaStreamsConfig {
         // To see the updates, write to output topic
         counts.toStream().to(OUTPUT_TOPIC, Produced.with(Serdes.String(), Serdes.Long()));
 
-        Properties properties = new Properties();
-        properties.putAll(props);
-        KafkaStreams streams = new KafkaStreams(builder.build(), properties);
+        KafkaStreams streams = new KafkaStreams(builder.build(), props);
         streams.start();
         return streams;
     }
