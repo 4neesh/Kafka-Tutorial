@@ -18,4 +18,9 @@ public class KafkaTopicConfig {
     public NewTopic jsonTopic(){
         return TopicBuilder.name("MyJsonTopic").build();
     }
+
+    @Bean
+    public NewTopic countsTopic(){
+        return TopicBuilder.name("user-message-counts").build();
+    }
 }
