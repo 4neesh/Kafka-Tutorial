@@ -53,6 +53,11 @@ When calling the /publishJson endpoint, the body must include a JSON representat
 }
 ```
 
+## Kafka Stream Endpoint
+```bash
+bin/kafka-console-consumer.sh --topic UserMessageCount --from-beginning --bootstrap-server localhost:9092 --property print.key=true --property print.value=true --property key.separator=": " --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
+```
+
 ## Notes
 Make sure Kafka is running and accessible at localhost:9092. You can configure topic names and bootstrap servers in src/main/resources/application.properties.
 
