@@ -2,6 +2,7 @@ package com.kafka.application.streams;
 
 import com.kafka.application.payload.User;
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
@@ -40,7 +41,7 @@ public class UserMessageCountStream {
                 .groupByKey()
                 .windowedBy(tumblingWindow)
                 .aggregate(
-                        () -> "0|", // initial: count=0, names=""
+                        () -> "0|", // initial value
                         (key, user, agg) -> {
                             String[] parts = agg.split("\\|", 2);
                             long count = Long.parseLong(parts[0]) + 1;
@@ -53,10 +54,14 @@ public class UserMessageCountStream {
                             }
                             names.add(user.getFirstName());
 
-                            String updated = count + "|" + String.join(",", names);
-                            return updated;
-                        }
-                );
+                            return count + "|" + String.join(",", names);
+                        },
+                        Materialized.<String, String, WindowStore<Bytes, byte[]>>as("user-agg-store")
+                                .withKeySerde(Serdes.String())
+                                .withValueSerde(Serdes.String())
+                )
+                .suppress(Suppressed.untilWindowCloses(Suppressed.BufferConfig.unbounded()));
+
 
         aggregated
                 .toStream()
