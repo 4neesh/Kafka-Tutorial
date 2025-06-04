@@ -2,11 +2,8 @@ package com.kafka.application.streams;
 
 import com.kafka.application.payload.User;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.streams.kstream.Consumed;
-import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.KTable;
+import org.apache.kafka.streams.kstream.*;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.Produced;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -32,9 +29,11 @@ public class UserMessageCountStream {
         KStream<String, User> rekeyedStream = userStream.selectKey((key, user) -> String.valueOf(user.getId()));
 
         // 4️⃣ Count messages per user id
+        // Updated: Added Materialized.with() to specify serdes for the state store, preventing serde mismatches
         KTable<String, Long> userMessageCounts = rekeyedStream
                 .groupByKey()
-                .count();
+                .count(Materialized.with(Serdes.String(), Serdes.Long()));
+
 
         // 5️⃣ Log the counts
         userMessageCounts
