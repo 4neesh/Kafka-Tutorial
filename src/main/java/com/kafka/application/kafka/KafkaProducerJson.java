@@ -25,14 +25,15 @@ public class KafkaProducerJson {
         Message<User> message = MessageBuilder
                 .withPayload(user)
                 .setHeader(KafkaHeaders.TOPIC, "MyJsonTopic3")
+                .setHeader(KafkaHeaders.MESSAGE_KEY, String.valueOf(user.getId()))  // Set user ID as message key for partitioning
                 .build();
-        
+
         // Execute within a transaction
         kafkaTemplate.executeInTransaction(operations -> {
             operations.send(message);
             return true;
         });
-        
+
         LOGGER.info("Transaction completed successfully");
     }
 }
