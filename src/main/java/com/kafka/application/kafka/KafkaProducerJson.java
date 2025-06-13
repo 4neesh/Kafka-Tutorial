@@ -24,7 +24,7 @@ public class KafkaProducerJson {
 
         Message<User> message = MessageBuilder
                 .withPayload(user)
-                .setHeader(KafkaHeaders.TOPIC, "MyJsonTopic2")
+                .setHeader(KafkaHeaders.TOPIC, "MyJsonTopic3")
                 .setHeader(KafkaHeaders.KEY, String.valueOf(user.getId())) // <-- add key for partitioning
                 .build();
         

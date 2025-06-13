@@ -25,7 +25,8 @@ bin/kafka-server-start.sh config/server.properties
 
 3.**View Topic messages (each in a new terminal):**
 ```bash
-bin/kafka-console-consumer.sh --topic MyJsonTopic2 --from-beginning --bootstrap-server localhost:9092
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic MyJsonTopic3 --partitions 3 --replication-factor 1
+bin/kafka-console-consumer.sh --topic MyJsonTopic3 --from-beginning --bootstrap-server localhost:9092
 ```
 
 ## Build the Project

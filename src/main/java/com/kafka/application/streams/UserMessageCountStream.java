@@ -24,7 +24,7 @@ public class UserMessageCountStream {
 
         // 2️⃣ Read from input topic with User value type
         KStream<String, User> userStream = builder.stream(
-                "MyJsonTopic2",
+                "MyJsonTopic3",
                 Consumed.with(Serdes.String(), userSerde)
         );
 
